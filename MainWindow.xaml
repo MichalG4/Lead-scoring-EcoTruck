@@ -1,0 +1,123 @@
+<Window x:Class="LeadScoring.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:core="clr-namespace:LeadScoring.Core"
+        xmlns:loc="clr-namespace:LeadScoring.Localization"
+        Title="{Binding [AppTitle], Source={x:Static loc:Loc.Instance}}"
+        Width="1300" Height="650" FontSize="16" MinWidth="950" MinHeight="400"
+        WindowStartupLocation="CenterScreen">
+
+    <DockPanel Margin="12">
+
+        <!-- Toolbar -->
+        <DockPanel DockPanel.Dock="Top" Margin="0,0,0,10">
+            <StackPanel DockPanel.Dock="Right" VerticalAlignment="Center">
+                <TextBlock x:Name="MaxScoreText" Foreground="Gray" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="{Binding [AddCompany], Source={x:Static loc:Loc.Instance}}"
+                        Padding="14,6" Click="AddButton_Click" />
+                <Button Content="{Binding [DeleteSelected], Source={x:Static loc:Loc.Instance}}"
+                        Padding="14,6" Margin="8,0,0,0" Click="DeleteButton_Click" />
+                <CheckBox x:Name="AutoSortCheck"
+                          Content="{Binding [AutoSort], Source={x:Static loc:Loc.Instance}}"
+                          VerticalAlignment="Center" Margin="20,0,0,0"
+                          Checked="AutoSort_Changed" Unchecked="AutoSort_Changed" />
+            </StackPanel>
+        </DockPanel>
+
+        <!-- One row = one company. Dropdown columns bind with PropertyChanged so the score updates immediately. -->
+        <DataGrid x:Name="CompaniesGrid"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  CanUserSortColumns="True"
+                  CanUserReorderColumns="False"
+                  SelectionMode="Extended"
+                  SelectionUnit="FullRow"
+                  HeadersVisibility="Column"
+                  GridLinesVisibility="Horizontal"
+                  RowHeight="44"
+                  PreviewKeyDown="CompaniesGrid_PreviewKeyDown">
+
+            <DataGrid.Columns>
+
+                <DataGridTextColumn Header="{Binding [ColCompany], Source={x:Static loc:Loc.Instance}}"
+                                    Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                                    SortMemberPath="Name"
+                                    Width="2*" />
+
+                <DataGridTemplateColumn Header="{Binding [ColProfile], Source={x:Static loc:Loc.Instance}}"
+                                        SortMemberPath="Profile" Width="1.6*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{x:Static core:ScoringModel.ProfileOptions}"
+                                      DisplayMemberPath="Display"
+                                      SelectedValuePath="Value"
+                                      SelectedValue="{Binding Profile, UpdateSourceTrigger=PropertyChanged}"
+                                      Margin="4,3" VerticalContentAlignment="Center" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="{Binding [ColFleetSize], Source={x:Static loc:Loc.Instance}}"
+                                        SortMemberPath="FleetSize" Width="1.6*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{x:Static core:ScoringModel.FleetSizeOptions}"
+                                      DisplayMemberPath="Display"
+                                      SelectedValuePath="Value"
+                                      SelectedValue="{Binding FleetSize, UpdateSourceTrigger=PropertyChanged}"
+                                      Margin="4,3" VerticalContentAlignment="Center" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="{Binding [ColVehicleType], Source={x:Static loc:Loc.Instance}}"
+                                        SortMemberPath="VehicleType" Width="1.6*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{x:Static core:ScoringModel.VehicleTypeOptions}"
+                                      DisplayMemberPath="Display"
+                                      SelectedValuePath="Value"
+                                      SelectedValue="{Binding VehicleType, UpdateSourceTrigger=PropertyChanged}"
+                                      Margin="4,3" VerticalContentAlignment="Center" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="{Binding [ColInterest], Source={x:Static loc:Loc.Instance}}"
+                                        SortMemberPath="Interest" Width="1.6*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{x:Static core:ScoringModel.InterestOptions}"
+                                      DisplayMemberPath="Display"
+                                      SelectedValuePath="Value"
+                                      SelectedValue="{Binding Interest, UpdateSourceTrigger=PropertyChanged}"
+                                      Margin="4,3" VerticalContentAlignment="Center" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- Read-only computed score, 0-100 -->
+                <DataGridTemplateColumn x:Name="ScoreColumn"
+                                        Header="{Binding [ColScore], Source={x:Static loc:Loc.Instance}}"
+                                        SortMemberPath="LeadScore" IsReadOnly="True" Width="150">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid Margin="6,5">
+                                <ProgressBar Minimum="0" Maximum="100"
+                                             Value="{Binding LeadScore, Mode=OneWay}"
+                                             BorderThickness="0" Background="#EEEEEE" />
+                                <TextBlock Text="{Binding LeadScore, Mode=OneWay}"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                                           FontWeight="SemiBold" />
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</Window>
