@@ -41,6 +41,8 @@ public sealed class Loc : INotifyPropertyChanged
             ["Fleet_Over50"] = "Powyżej 50 pojazdów",
             ["Fleet_10to50"] = "10–50 pojazdów",
             ["Fleet_Under10"] = "Poniżej 10 pojazdów",
+            
+            ["NotAvailable"] = "N/D",
 
             ["Vehicle_TrucksOnly"] = "Tylko ciężarówki",
             ["Vehicle_Mixed"] = "Mieszane",

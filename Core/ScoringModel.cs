@@ -40,6 +40,7 @@ public static class ScoringModel
         new Option<FleetSizeBand>(FleetSizeBand.Over50, Loc.T("Fleet_Over50"), 25),
         new Option<FleetSizeBand>(FleetSizeBand.From10To50, Loc.T("Fleet_10to50"), 15),
         new Option<FleetSizeBand>(FleetSizeBand.Under10, Loc.T("Fleet_Under10"), 10),
+        new Option<FleetSizeBand>(FleetSizeBand.NotAvailable, Loc.T("NotAvailable"), 0),
     };
 
     public static IReadOnlyList<Option<VehicleMix>> VehicleTypeOptions { get; } = new[]
@@ -48,6 +49,7 @@ public static class ScoringModel
         new Option<VehicleMix>(VehicleMix.TrucksOnly, Loc.T("Vehicle_TrucksOnly"), 25),
         new Option<VehicleMix>(VehicleMix.Mixed, Loc.T("Vehicle_Mixed"), 15),
         new Option<VehicleMix>(VehicleMix.MostlyVans, Loc.T("Vehicle_MostlyVans"), 5),
+        new Option<VehicleMix>(VehicleMix.NotAvailable, Loc.T("NotAvailable"), 0),
     };
 
     public static IReadOnlyList<Option<InterestLevel>> InterestOptions { get; } = new[]

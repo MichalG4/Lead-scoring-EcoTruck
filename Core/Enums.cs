@@ -16,6 +16,7 @@ public enum FleetSizeBand
     Over50,      // Powyżej 50 – 25 pkt
     From10To50,  // 10–50 – 15 pkt
     Under10,     // Poniżej 10 – 10 pkt
+    NotAvailable, //brak - 0 pkt
 }
 
 public enum VehicleMix
@@ -24,6 +25,7 @@ public enum VehicleMix
     TrucksOnly,  // Tylko ciężarówki – 25 pkt
     Mixed,       // Mieszane – 15 pkt
     MostlyVans,  // Głównie dostawcze – 5 pkt
+    NotAvailable, // brak - 0 pkt
 }
 
 public enum InterestLevel
